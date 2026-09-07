@@ -1,5 +1,7 @@
 # Real-Time Sales Dashboard
 
+🚀 **Live Demo:** [View Live Streamlit Dashboard](https://realtime-sales-dashboard-8fxljp2acqp5bayfd8rkmd.streamlit.app/)
+
 A real-time data streaming and visualization pipeline built with Python, SQLite, Pandas, and Streamlit.
 
 ## Architecture
