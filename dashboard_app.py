@@ -1,29 +1,31 @@
-import streamlit as st
-import pandas as pd
 import sqlite3
+import pandas as pd
+import streamlit as st
 from streamlit_autorefresh import st_autorefresh
 
+st_autorefresh(interval=5000, key="datarefresh")
+
 def get_summary():
-    conn = sqlite3.connect('sales.db')
+    conn = sqlite3.connect("sales.db")
+    
+    # Ensure table exists so Streamlit Cloud does not crash
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS sales_summary_minute (
+            minute_ts TEXT PRIMARY KEY,
+            total_sales REAL,
+            transaction_count INTEGER
+        )
+    """)
+    
     df = pd.read_sql("SELECT * FROM sales_summary_minute ORDER BY minute_ts DESC LIMIT 240", conn)
     conn.close()
     return df
 
 st.title("Real-Time Sales Dashboard")
 
-# Auto-refresh every 5 seconds
-st_autorefresh(interval=5000, limit=0, key="refresh")
-
 df = get_summary()
 
 if df.empty:
-    st.warning("No sales data yet. Please make sure producer.py is running!")
+    st.info("No sales data available yet. Run your local producer & aggregator scripts to populate data!")
 else:
-    latest_revenue = df.iloc[0]['total_revenue']
-    st.metric("Revenue (Latest Minute)", f"${latest_revenue:,.2f}")
-    
-    st.subheader("Revenue Over Time")
-    st.line_chart(df.set_index('minute_ts')['total_revenue'])
-    
-    st.subheader("Recent Minutes Data")
-    st.dataframe(df.head(20))
+    st.dataframe(df)
