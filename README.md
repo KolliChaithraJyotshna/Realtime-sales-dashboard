@@ -81,9 +81,12 @@ pip install -r requirements.txt
 python producer.py
 python aggregator.py
 streamlit run dashboard_app.py
+```
 
-### Windows / Anaconda (if `python` is not in PATH)
+### Option 2: Windows / Anaconda (if `python` is not in PATH)
 If `python` is not recognized in your terminal, run using your Anaconda binary path:
-1. `& "C:\Users\chait\anaconda3\python.exe" producer.py`
-2. `& "C:\Users\chait\anaconda3\python.exe" aggregator.py`
-3. `& "C:\Users\chait\anaconda3\python.exe" -m streamlit run dashboard_app.py`
+
+```powershell
+& "C:\Users\chait\anaconda3\python.exe" producer.py
+& "C:\Users\chait\anaconda3\python.exe" aggregator.py
+& "C:\Users\chait\anaconda3\python.exe" -m streamlit run dashboard_app.py
